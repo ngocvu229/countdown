@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Đồng hồ đếm ngược</title>
+	<script  language="javascript">
+			var h=null;
+			var p=null;
+			var s=null;
+			var t=null;
+
+			function upgradeTime(){
+
+
+			if(h===null){
+				document.getElementById('output').style.display="block";
+				 h = parseInt(document.getElementById('hours').value);
+				 p = parseInt(document.getElementById('minutes').value);
+				 s = parseInt(document.getElementById('seconds').value);
+				
+			 }
+				//thiết lập đồng hồ
+				if(p>=60){
+					alert("số phút không hợp lệ");
+				}
+				if(s>=60){
+					alert("số giây không hợp lệ");
+				}
+				if(isNaN(h)){
+					h=0;
+				}
+				if(isNaN(p)){
+					p=0;
+				}
+				if(isNaN(s)){
+					s=0;
+				}
+
+				else{
+					if(s===-1){
+						p-=1;
+						s=59;
+					}
+					if(p===-1){
+						h-=1;
+						p=59;
+					}
+					if(h==-1){
+						clearTimeout(t);
+						alert("HẾT GIỜ");
+						return false;
+					}
+
+					if (s<10){
+						s="0"+s.toString();
+					}
+
+					//thiết lập đồng hồ chạy
+
+					t=setTimeout(function(){
+						s--;
+						upgradeTime();
+					},1000);
+
+					document.getElementById('h').innerText=h.toString(); 
+					document.getElementById('p').innerText=p.toString(); 
+					document.getElementById('s').innerText=s.toString(); 
+
+				}
+			}
+
+			//thiết lập đồng hồ dừng
+
+			function stop(){
+				clearTimeout(t);
+			}
+	</script>
+	<style type="text/css">
+		body{
+			background:#013040;
+		}
+		#input{
+			margin: 0px 0px 0px 500px;
+			height: 150px;
+			width: 300px;
+		}
+
+		div#input h1{
+			height: 60px;
+			width: 300px;
+			border-radius: 50%;
+			border: 5px solid #247634;
+			background:#9ACFF1;
+			padding: 20px 0px 0px 20px;
+
+		}
+
+		div#input span{
+			color: #A3DAEF;
+			margin: 20px 0px 0px 0px;
+
+		}
+
+		div#input input{
+			margin: 20px 0px 0px 0px;
+			background: #229460;
+			color: #fff;
+
+		}
+
+		div input#hours{
+			margin: 0px 0px 0px 7px;
+		}
+
+		div input#seconds{
+			margin: 20px 0px 0px 1px;
+		}
+
+
+		div#output{
+			height: 600px;
+			width: 600px;
+			margin: 200px 0px 0px 550px;
+			display: none;
+		}
+
+		div#output span{
+			border: 3px solid #9ACFF1;
+			color: #229460;
+			background: #fff;
+			font-size: 70px;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="input">
+		<h1>Đồng hồ đếm ngược</h1>
+		<span>Nhập giờ : </span><input type="text" id="hours" ></br>
+		<span>Nhập phút : </span><input type="text" id="minutes"></br>
+		<span>Nhập giây : </span><input type="text" id="seconds"></br>
+		<input type="button" id="start" value="start" onclick="upgradeTime()"/>
+		<input type="button" id="stop" value="stop" onclick="stop()"  /></br>
+	</div>
+	<div id="output" onload="upgradeTime()">
+		<span id="h">giờ</span> :
+		<span id="p">phút</span> :
+		<span id="s">giây</span>
+	</div>
+</body>
+</html>
